@@ -1,0 +1,10 @@
+@use "../../styles/variables" as *;
+
+.nav-bar {
+  border-bottom: 1px solid $col-lg;
+  padding: 1rem;
+  &__heading {
+    text-align: center;
+    font-size: 2rem;
+  }
+}
