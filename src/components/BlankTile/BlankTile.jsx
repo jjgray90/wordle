@@ -1,6 +1,6 @@
 import "./BlankTile.scss";
 
-const BlankTile = () => {
+const BlankTile = ({input}) => {
   return (
     <div className="blank-tile">
     </div>

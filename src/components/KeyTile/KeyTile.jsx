@@ -1,8 +1,11 @@
 import "./KeyTile.scss";
 
-const KeyTile = ({ value, symbol }) => {
+const KeyTile = ({ value, symbol, onClick }) => {
   return (
-    <div className={`key-tile ${symbol && `key-tile--symbol`}`}>
+    <div
+      onClick={onClick}
+      className={`key-tile ${symbol && `key-tile--symbol`}`}
+    >
       <p>{value}</p>
     </div>
   );
