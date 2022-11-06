@@ -25,15 +25,25 @@
       justify-content: center;
       align-items: center;
 
-      -webkit-backface-visibility: hidden; /* Safari */
+      -webkit-backface-visibility: hidden;
       backface-visibility: hidden;
     }
 
     .blank-tile__guess {
       border: 2px solid $col-lg;
 
-      .blank-tile__guess--fill {
+      &--fill {
         border: 2px solid $col-dg;
+        animation: pulse-animation 0.1s;
+      }
+
+      @keyframes pulse-animation {
+        0% {
+          box-shadow: 0 0 0 0px rgba(47, 49, 49, 0);
+        }
+        100% {
+          box-shadow: 0 0 0 1px rgba(47, 49, 49, 1);
+        }
       }
     }
 

@@ -1,9 +1,9 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 
 const WordContext = createContext();
 
 export const WordProvider = ({ children }) => {
-  const [word, setWord] = useState(["F", "A", "I", "T", "H"]);
+  const [word, setWord] = useState();
   const [guessWord, setGuessWord] = useState([]);
   const [rowOne, setRowOne] = useState(false);
   const [rowTwo, setRowTwo] = useState(false);
@@ -12,6 +12,23 @@ export const WordProvider = ({ children }) => {
   const [rowFive, setRowFive] = useState(false);
   const [rowSix, setRowSix] = useState(false);
   const [rowNum, setRowNum] = useState(1);
+
+  const getWord = async () => {
+    try {
+      const response = await fetch(
+        "https://random-word-api.herokuapp.com/word?length=5"
+      );
+      if (!response.ok) {
+        throw new Error(response.status + " error with request");
+      }
+      const data = await response.json();
+      setWord(...data);
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
+  const cleanWord = (setWord, word) => setWord(word.toUpperCase().split(""));
 
   const handleUpdateGuessWord = (input) => {
     if (guessWord.length < 5) setGuessWord([...guessWord, input]);
@@ -42,7 +59,7 @@ export const WordProvider = ({ children }) => {
       } else if (correctWord.includes(guessWord[i])) {
         tempArr.push({ char: guessWord[i], col: "yellow", delay });
       } else tempArr.push({ char: guessWord[i], col: "grey", delay });
-      delay += 0.4;
+      delay += 0.2;
     }
     setRowState(tempArr);
   };
@@ -70,10 +87,18 @@ export const WordProvider = ({ children }) => {
       setGuessWord([]);
     }
 
-    if (checkCorrect(word, guessWord) === true) {
+    if (checkCorrect(word, guessWord)) {
       console.log("yep");
     }
   };
+
+  useEffect(() => {
+    getWord();
+  }, []);
+
+  useEffect(() => {
+    if (typeof word === "string") cleanWord(setWord, word);
+  }, [word]);
 
   return (
     <WordContext.Provider
