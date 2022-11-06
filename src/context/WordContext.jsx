@@ -4,7 +4,14 @@ const WordContext = createContext();
 
 export const WordProvider = ({ children }) => {
   const [word, setWord] = useState(["F", "A", "I", "T", "H"]);
-  const [guessWord, setGuessWord] = useState("");
+  const [guessWord, setGuessWord] = useState([]);
+  const [rowOne, setRowOne] = useState(false);
+  const [rowTwo, setRowTwo] = useState(false);
+  const [rowThree, setRowThree] = useState(false);
+  const [rowFour, setRowFour] = useState(false);
+  const [rowFive, setRowFive] = useState(false);
+  const [rowSix, setRowSix] = useState(false);
+  const [rowNum, setRowNum] = useState(1);
 
   const handleUpdateGuessWord = (input) => {
     if (guessWord.length < 5) setGuessWord([...guessWord, input]);
@@ -18,17 +25,67 @@ export const WordProvider = ({ children }) => {
     });
   };
 
+  const checkCorrect = (a, b) => {
+    for (let i = 0; i < a.length; i++) {
+      if (a[i] !== b[i]) return false;
+    }
+    return true;
+  };
+
+  const checkLetters = (setRowState, guessWord, correctWord) => {
+    const tempArr = [];
+    let delay = 0;
+
+    for (let i = 0; i < guessWord.length; i++) {
+      if (guessWord[i] === correctWord[i]) {
+        tempArr.push({ char: guessWord[i], col: "green", delay });
+      } else if (correctWord.includes(guessWord[i])) {
+        tempArr.push({ char: guessWord[i], col: "yellow", delay });
+      } else tempArr.push({ char: guessWord[i], col: "grey", delay });
+      delay += 0.4;
+    }
+    setRowState(tempArr);
+  };
+
   const handleSubmit = () => {
-    if (guessWord.length === 5) console.log(guessWord + " submitted");
+    if (guessWord.length === 5) {
+      if (!rowOne) {
+        checkLetters(setRowOne, guessWord, word);
+        setRowNum(2);
+      } else if (!rowTwo) {
+        checkLetters(setRowTwo, guessWord, word);
+        setRowNum(3);
+      } else if (!rowThree) {
+        checkLetters(setRowThree, guessWord, word);
+        setRowNum(4);
+      } else if (!rowFour) {
+        checkLetters(setRowFour, guessWord, word);
+        setRowNum(5);
+      } else if (!rowFive) {
+        checkLetters(setRowFive, guessWord, word);
+        setRowNum(6);
+      } else if (!rowSix) checkLetters(setRowSix, guessWord, word);
+      else console.log("Game over");
+
+      setGuessWord([]);
+    }
+
+    if (checkCorrect(word, guessWord) === true) {
+      console.log("yep");
+    }
   };
 
   return (
     <WordContext.Provider
       value={{
-        word,
-        setWord,
         guessWord,
-        setGuessWord,
+        rowOne,
+        rowTwo,
+        rowThree,
+        rowFour,
+        rowFive,
+        rowSix,
+        rowNum,
         handleUpdateGuessWord,
         handleBackspace,
         handleSubmit,

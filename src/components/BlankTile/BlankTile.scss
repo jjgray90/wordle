@@ -3,5 +3,62 @@
 .blank-tile {
   height: 3.875rem;
   width: 3.875rem;
-  border: 2px solid $col-lg;
+  perspective: 1000px;
+
+  .blank-tile__inner {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+
+    &--flip {
+      transform: rotateX(180deg);
+    }
+
+    .blank-tile__guess,
+    .blank-tile__final {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      -webkit-backface-visibility: hidden; /* Safari */
+      backface-visibility: hidden;
+    }
+
+    .blank-tile__guess {
+      border: 2px solid $col-lg;
+
+      .blank-tile__guess--fill {
+        border: 2px solid $col-dg;
+      }
+    }
+
+    .blank-tile__final {
+      transform: rotateX(180deg);
+
+      &--green {
+        background-color: $col-grn;
+        color: $col-wht;
+      }
+
+      &--yellow {
+        background-color: $col-ylw;
+        color: $col-wht;
+      }
+
+      &--grey {
+        background-color: $col-dg;
+        color: $col-wht;
+      }
+    }
+
+    .blank-tile__value {
+      font-weight: bold;
+      font-size: 2rem;
+    }
+  }
 }
