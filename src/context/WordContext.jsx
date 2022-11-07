@@ -51,13 +51,16 @@ export const WordProvider = ({ children }) => {
 
   const checkLetters = (setRowState, guessWord, correctWord) => {
     const tempArr = [];
+    const tempWord = [...correctWord];
     let delay = 0;
 
     for (let i = 0; i < guessWord.length; i++) {
-      if (guessWord[i] === correctWord[i]) {
+      if (guessWord[i] === tempWord[i]) {
         tempArr.push({ char: guessWord[i], col: "green", delay });
-      } else if (correctWord.includes(guessWord[i])) {
+        tempWord[i] = "*";
+      } else if (tempWord.includes(guessWord[i])) {
         tempArr.push({ char: guessWord[i], col: "yellow", delay });
+        tempWord[tempWord.indexOf(guessWord[i])] = "*";
       } else tempArr.push({ char: guessWord[i], col: "grey", delay });
       delay += 0.2;
     }
