@@ -3,7 +3,7 @@ import { createContext, useState, useEffect } from "react";
 const WordContext = createContext();
 
 export const WordProvider = ({ children }) => {
-  const [word, setWord] = useState();
+  const [word, setWord] = useState("ashes");
   const [guessWord, setGuessWord] = useState([]);
   const [usedLetters, setUsedLetters] = useState([]);
   const [rowOne, setRowOne] = useState(false);
@@ -56,12 +56,27 @@ export const WordProvider = ({ children }) => {
     let delay = 0;
 
     for (let i = 0; i < guessWord.length; i++) {
-      if (guessWord[i] === tempWord[i]) {
+      if (
+        tempWord.includes(guessWord[i]) &&
+        guessWord[i] !== tempWord[i] &&
+        ((guessWord[i] === tempWord[i + 1] &&
+          guessWord[i] === guessWord[i + 1]) ||
+          (guessWord[i] === tempWord[i + 2] &&
+            guessWord[i] === guessWord[i + 2]) ||
+          (guessWord[i] === tempWord[i + 3] &&
+            guessWord[i] === guessWord[i + 3]) ||
+          (guessWord[i] === tempWord[i + 4] &&
+            guessWord[i] === guessWord[i + 4]))
+      ) {
+        tempArr.push({ char: guessWord[i], col: "grey", delay });
+      } else if (
+        tempWord.includes(guessWord[i]) &&
+        guessWord[i] !== tempWord[i]
+      ) {
+        tempArr.push({ char: guessWord[i], col: "yellow", delay });
+      } else if (guessWord[i] === tempWord[i]) {
         tempArr.push({ char: guessWord[i], col: "green", delay });
         tempWord[i] = "*";
-      } else if (tempWord.includes(guessWord[i])) {
-        tempArr.push({ char: guessWord[i], col: "yellow", delay });
-        tempWord[tempWord.indexOf(guessWord[i])] = "*";
       } else tempArr.push({ char: guessWord[i], col: "grey", delay });
       delay += 0.2;
     }
