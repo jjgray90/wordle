@@ -7,6 +7,8 @@ const Keyboard = () => {
   const { handleUpdateGuessWord, handleBackspace, handleSubmit } =
     useContext(WordContext);
 
+
+
   return (
     <div className="keyboard">
       <div className="keyboard__row">

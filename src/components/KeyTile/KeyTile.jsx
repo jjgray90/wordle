@@ -23,6 +23,8 @@ const KeyTile = ({ value, symbol, onClick }) => {
     setTimeout(() => setTileCol(checkUsedLetters(usedLetters, value)), 1200);
   }, [usedLetters, value]);
 
+
+
   return (
     <div
       onClick={onClick}

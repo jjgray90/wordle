@@ -32,7 +32,14 @@ export const WordProvider = ({ children }) => {
   const cleanWord = (setWord, word) => setWord(word.toUpperCase().split(""));
 
   const handleUpdateGuessWord = (input) => {
-    if (guessWord.length < 5) setGuessWord([...guessWord, input]);
+    if (guessWord.length < 5) {
+      setGuessWord((currentState) => {
+        const newArr = [...currentState];
+        newArr.push(input);
+        return newArr;
+      });
+      // console.log(input);
+    }
   };
 
   const handleBackspace = () => {
@@ -111,6 +118,35 @@ export const WordProvider = ({ children }) => {
       console.log("yep");
     }
   };
+
+  useEffect(() => {
+    window.addEventListener("keydown", (event) => {
+      if (event.key === "Backspace") {
+        handleBackspace();
+      }
+    });
+
+    return () => window.removeEventListener("keydown", handleBackspace);
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        handleSubmit();
+      }
+    });
+
+    return () => window.removeEventListener("keydown", handleSubmit);
+  }, [guessWord]);
+
+  useEffect(() => {
+    window.addEventListener("keydown", (event) => {
+      if (event.key !== "Enter" && event.key !== "Backspace")
+        handleUpdateGuessWord(event.key.toUpperCase());
+    });
+
+    return () => window.removeEventListener("keydown", handleUpdateGuessWord);
+  }, []);
 
   useEffect(() => {
     getWord();
