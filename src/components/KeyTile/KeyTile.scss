@@ -17,4 +17,19 @@
   &--symbol {
     width: 4.5rem;
   }
+
+  &--green {
+    background-color: $col-grn;
+    color: $col-wht;
+  }
+
+  &--yellow {
+    background-color: $col-ylw;
+    color: $col-wht;
+  }
+
+  &--grey {
+    background-color: $col-dg;
+    color: $col-wht;
+  }
 }

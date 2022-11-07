@@ -5,6 +5,7 @@ const WordContext = createContext();
 export const WordProvider = ({ children }) => {
   const [word, setWord] = useState();
   const [guessWord, setGuessWord] = useState([]);
+  const [usedLetters, setUsedLetters] = useState([]);
   const [rowOne, setRowOne] = useState(false);
   const [rowTwo, setRowTwo] = useState(false);
   const [rowThree, setRowThree] = useState(false);
@@ -65,6 +66,7 @@ export const WordProvider = ({ children }) => {
       delay += 0.2;
     }
     setRowState(tempArr);
+    setUsedLetters([...usedLetters, ...tempArr]);
   };
 
   const handleSubmit = () => {
@@ -114,6 +116,7 @@ export const WordProvider = ({ children }) => {
         rowFive,
         rowSix,
         rowNum,
+        usedLetters,
         handleUpdateGuessWord,
         handleBackspace,
         handleSubmit,
