@@ -5,8 +5,8 @@ const WordContext = createContext();
 export const WordProvider = ({ children }) => {
   const [word, setWord] = useState();
   const [guessWord, setGuessWord] = useState([]);
-  const [correct, setCorrect] = useState(false);
   const [usedLetters, setUsedLetters] = useState([]);
+  const [loser, setLoser] = useState(false);
   const [rowOne, setRowOne] = useState(false);
   const [rowTwo, setRowTwo] = useState(false);
   const [rowThree, setRowThree] = useState(false);
@@ -108,16 +108,19 @@ export const WordProvider = ({ children }) => {
       } else if (!rowFive) {
         checkLetters(setRowFive, guessWord, word);
         setRowNum(6);
-      } else if (!rowSix) checkLetters(setRowSix, guessWord, word);
-      else console.log("Game over");
+      } else if (!rowSix) {
+        checkLetters(setRowSix, guessWord, word);
+      }
 
       setGuessWord([]);
     }
-
-    if (checkCorrect(word, guessWord)) {
-      setCorrect(true);
-    }
   };
+
+  useEffect(() => {
+    if (rowSix && !checkCorrect(word, guessWord)) {
+      setLoser(true);
+    }
+  }, [rowSix, word, guessWord]);
 
   useEffect(() => {
     window.addEventListener("keydown", (event) => {
@@ -159,6 +162,7 @@ export const WordProvider = ({ children }) => {
   return (
     <WordContext.Provider
       value={{
+        word,
         guessWord,
         rowOne,
         rowTwo,
@@ -168,7 +172,7 @@ export const WordProvider = ({ children }) => {
         rowSix,
         rowNum,
         usedLetters,
-        correct,
+        loser,
         handleUpdateGuessWord,
         handleBackspace,
         handleSubmit,

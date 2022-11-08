@@ -2,6 +2,7 @@ import "./WordGrid.scss";
 import WordRow from "../WordRow/WordRow";
 import { useContext } from "react";
 import WordContext from "../../context/WordContext";
+import GameOver from "../GameOver/GameOver";
 
 const WordGrid = () => {
   const {
@@ -13,11 +14,13 @@ const WordGrid = () => {
     rowFive,
     rowSix,
     rowNum,
-
+    loser,
+    word,
   } = useContext(WordContext);
 
   return (
     <div className="word-grid">
+      <GameOver word={word} loser={loser} />
       <WordRow value={rowNum === 1 && guessWord} final={rowOne} />
       <WordRow value={rowNum === 2 && guessWord} final={rowTwo} />
       <WordRow value={rowNum === 3 && guessWord} final={rowThree} />
