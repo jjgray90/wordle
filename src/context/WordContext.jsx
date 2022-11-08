@@ -32,7 +32,7 @@ export const WordProvider = ({ children }) => {
 
   const cleanWord = (setWord, word) => setWord(word.toUpperCase().split(""));
 
-  const handleUpdateGuessWord = (input) => {
+  const handleUpdateGuessWord = (guessWord, input) => {
     if (guessWord.length < 5) {
       setGuessWord((currentState) => {
         const newArr = [...currentState];
@@ -117,12 +117,6 @@ export const WordProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    if (rowSix && !checkCorrect(word, guessWord)) {
-      setLoser(true);
-    }
-  }, [rowSix, word, guessWord]);
-
-  useEffect(() => {
     window.addEventListener("keydown", (event) => {
       if (event.key === "Backspace") {
         handleBackspace();
@@ -140,16 +134,16 @@ export const WordProvider = ({ children }) => {
     });
 
     return () => window.removeEventListener("keydown", handleSubmit);
-  }, [guessWord]);
+  }, [guessWord]); // eslint-disable-line
 
   useEffect(() => {
     window.addEventListener("keydown", (event) => {
       if (event.key !== "Enter" && event.key !== "Backspace")
-        handleUpdateGuessWord(event.key.toUpperCase());
+        handleUpdateGuessWord(guessWord, event.key.toUpperCase());
     });
 
     return () => window.removeEventListener("keydown", handleUpdateGuessWord);
-  }, []);
+  }, []); // eslint-disable-line
 
   useEffect(() => {
     getWord();
@@ -158,6 +152,12 @@ export const WordProvider = ({ children }) => {
   useEffect(() => {
     if (typeof word === "string") cleanWord(setWord, word);
   }, [word]);
+
+  useEffect(() => {
+    if (rowSix && !checkCorrect(word, guessWord)) {
+      setLoser(true);
+    }
+  }, [rowSix, word, guessWord]);
 
   return (
     <WordContext.Provider
