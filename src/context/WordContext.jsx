@@ -3,8 +3,9 @@ import { createContext, useState, useEffect } from "react";
 const WordContext = createContext();
 
 export const WordProvider = ({ children }) => {
-  const [word, setWord] = useState("ashes");
+  const [word, setWord] = useState();
   const [guessWord, setGuessWord] = useState([]);
+  const [correct, setCorrect] = useState(false);
   const [usedLetters, setUsedLetters] = useState([]);
   const [rowOne, setRowOne] = useState(false);
   const [rowTwo, setRowTwo] = useState(false);
@@ -38,7 +39,6 @@ export const WordProvider = ({ children }) => {
         newArr.push(input);
         return newArr;
       });
-      // console.log(input);
     }
   };
 
@@ -115,7 +115,7 @@ export const WordProvider = ({ children }) => {
     }
 
     if (checkCorrect(word, guessWord)) {
-      console.log("yep");
+      setCorrect(true);
     }
   };
 
@@ -168,6 +168,7 @@ export const WordProvider = ({ children }) => {
         rowSix,
         rowNum,
         usedLetters,
+        correct,
         handleUpdateGuessWord,
         handleBackspace,
         handleSubmit,

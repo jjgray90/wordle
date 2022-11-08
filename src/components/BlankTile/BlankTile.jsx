@@ -1,8 +1,11 @@
 import "./BlankTile.scss";
 
-const BlankTile = ({ value, final, col, delay }) => {
+const BlankTile = ({ value, final, checkWin, col, delay }) => {
   return (
-    <div className="blank-tile">
+    <div
+      className={`blank-tile ${checkWin && `blank-tile--bounce`}`}
+      style={{ animationDelay: delay + 1 + "s" }}
+    >
       <div
         className={`blank-tile__inner ${final && `blank-tile__inner--flip`}`}
         style={{ transitionDelay: delay + "s" }}

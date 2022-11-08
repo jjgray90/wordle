@@ -13,6 +13,7 @@ const WordGrid = () => {
     rowFive,
     rowSix,
     rowNum,
+
   } = useContext(WordContext);
 
   return (

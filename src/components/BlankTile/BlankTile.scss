@@ -5,6 +5,25 @@
   width: 3.875rem;
   perspective: 1000px;
 
+  &--bounce {
+    animation: bounce 1.2s ease 2 forwards;
+  }
+  @keyframes bounce {
+    0%,
+    20%,
+    50%,
+    80%,
+    100% {
+      transform: translateY(0);
+    }
+    40% {
+      transform: translateY(-10px);
+    }
+    60% {
+      transform: translateY(-5px);
+    }
+  }
+
   .blank-tile__inner {
     position: relative;
     height: 100%;
