@@ -33,3 +33,14 @@
     color: $col-wht;
   }
 }
+
+@media only screen and (max-width: 568px) {
+  .key-tile {
+    width: 2rem;
+    font-size: 0.8rem;
+
+    &--symbol {
+      width: 3rem;
+    }
+  }
+}
