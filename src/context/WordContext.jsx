@@ -32,7 +32,7 @@ export const WordProvider = ({ children }) => {
 
   const cleanWord = (setWord, word) => setWord(word.toUpperCase().split(""));
 
-  const handleUpdateGuessWord = (guessWord, input) => {
+  const handleUpdateGuessWord = (input) => {
     if (guessWord.length < 5) {
       setGuessWord((currentState) => {
         const newArr = [...currentState];
@@ -139,7 +139,7 @@ export const WordProvider = ({ children }) => {
   useEffect(() => {
     window.addEventListener("keydown", (event) => {
       if (event.key !== "Enter" && event.key !== "Backspace")
-        handleUpdateGuessWord(guessWord, event.key.toUpperCase());
+        handleUpdateGuessWord(event.key.toUpperCase());
     });
 
     return () => window.removeEventListener("keydown", handleUpdateGuessWord);
