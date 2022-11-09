@@ -31,6 +31,8 @@
     transition: transform 0.8s;
     -webkit-transition: -webkit-transform 0.8s;
     transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
+
 
     &--flip {
       transform: rotateX(180deg);
@@ -70,6 +72,8 @@
 
     .blank-tile__final {
       transform: rotateX(180deg);
+      -webkit-transform: rotateX(180deg);
+
 
       &--green {
         background-color: $col-grn;
